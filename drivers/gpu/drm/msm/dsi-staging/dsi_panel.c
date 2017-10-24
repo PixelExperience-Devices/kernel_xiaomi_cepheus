@@ -616,6 +616,7 @@ static int dsi_panel_update_backlight(struct dsi_panel *panel,
 {
 	int rc = 0;
 	struct mipi_dsi_device *dsi;
+	size_t num_params;
 
 	if (!panel || (bl_lvl > 0xffff)) {
 		pr_err("invalid params\n");
@@ -632,6 +633,9 @@ static int dsi_panel_update_backlight(struct dsi_panel *panel,
 	else
 		rc = mipi_dsi_dcs_set_display_brightness(dsi, bl_lvl);
 
+	num_params = panel->bl_config.bl_max_level > 0xFF ? 2 : 1;
+	rc = mipi_dsi_dcs_set_display_brightness(dsi, bl_lvl, num_params);
+	
 	if (rc < 0)
 		pr_err("failed to update dcs backlight:%d\n", bl_lvl);
 
