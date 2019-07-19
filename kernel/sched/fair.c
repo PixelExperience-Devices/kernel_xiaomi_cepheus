@@ -13036,7 +13036,8 @@ void walt_rotate_work_init(void)
 	for_each_possible_cpu(i) {
 		struct walt_rotate_work *wr = &per_cpu(walt_rotate_works, i);
 
-		INIT_WORK(&wr->w, walt_rotate_work_func);
+		if (cpumask_test_cpu(i, cpu_lp_mask))
+			INIT_WORK(&wr->w, walt_rotate_work_func);
 	}
 }
 
