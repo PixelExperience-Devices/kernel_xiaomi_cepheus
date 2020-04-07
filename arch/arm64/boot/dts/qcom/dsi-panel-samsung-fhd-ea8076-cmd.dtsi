@@ -62,6 +62,7 @@
 		qcom,mdss-panel-on-dimming-delay = <120>;
 		qcom,disp-doze-lpm-backlight = <20>;
 		qcom,disp-doze-hbm-backlight = <266>;
+
 		qcom,disp-dc-dimlayer-backlight = <580>;
 		qcom,disp-fod-dim-lut = <
 			/* brightness, alpha */
