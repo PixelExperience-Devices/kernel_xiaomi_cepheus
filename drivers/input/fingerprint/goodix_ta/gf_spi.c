@@ -543,6 +543,11 @@ static void notification_work(struct work_struct *work)
 }
 #endif
 
+static void notification_work(struct work_struct *work)
+{
+	dsi_bridge_interface_enable(FP_UNLOCK_REJECTION_TIMEOUT);
+}
+
 static irqreturn_t gf_irq(int irq, void *handle)
 {
 	struct gf_dev *gf_dev = &gf;
@@ -737,7 +742,10 @@ static const struct file_operations gf_fops = {
 };
 
 
+<<<<<<< HEAD
 #ifndef GOODIX_DRM_INTERFACE_WA
+=======
+>>>>>>> 22d9af5cc8bba... disp: msm: Implement early fingerprint wake up optimization
 static int goodix_fb_state_chg_callback(struct notifier_block *nb,
 					unsigned long val, void *data)
 {
@@ -831,9 +839,13 @@ static int gf_probe(struct platform_device *pdev)
 	gf_dev->device_available = 0;
 	gf_dev->fb_black = 0;
 	gf_dev->wait_finger_down = false;
+<<<<<<< HEAD
 #ifndef GOODIX_DRM_INTERFACE_WA
 	INIT_WORK(&gf_dev->work, notification_work);
 #endif
+=======
+	INIT_WORK(&gf_dev->work, notification_work);
+>>>>>>> 22d9af5cc8bba... disp: msm: Implement early fingerprint wake up optimization
 
 	if (gf_parse_dts(gf_dev)) {
 		goto error_hw;
