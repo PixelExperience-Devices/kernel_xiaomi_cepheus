@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=Evasi0nKernel
+kernel.string=PIXON
 do.devicecheck=1
 do.modules=0
 do.systemless=1
