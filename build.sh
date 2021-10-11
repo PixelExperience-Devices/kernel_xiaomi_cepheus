@@ -1,6 +1,6 @@
 DATE=$(date +"%Y%m%d")
 DATE_START=$(date +"%s")
-KERNEL_NAME=PIXON-Cepheus-"$DATE"
+KERNEL_NAME=PIXON-KERNEL-Cepheus-"$DATE"
 
 export KERNEL_PATH=$PWD
 export ANYKERNEL_PATH=~/Anykernel3
@@ -9,6 +9,10 @@ export PATH=${CLANG_PATH}/bin:${PATH}
 export CLANG_TRIPLE=aarch64-linux-gnu-
 export ARCH=arm64
 export SUBARCH=arm64
+
+export KBUILD_BUILD_USER="AndersonFagundes"
+export LOCALVERSION="--PixonKernel-"
+
 
 echo "===================Setup Environment==================="
 # git clone --depth=1 https://github.com/kdrag0n/proton-clang $CLANG_PATH
