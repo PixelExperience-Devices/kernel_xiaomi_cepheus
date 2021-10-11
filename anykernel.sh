@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=PIXON
+kernel.string=PIXON KERNEL
 do.devicecheck=1
 do.modules=0
 do.systemless=1
