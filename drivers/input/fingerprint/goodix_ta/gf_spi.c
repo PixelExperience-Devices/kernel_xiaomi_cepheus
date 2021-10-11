@@ -836,13 +836,10 @@ static int gf_probe(struct platform_device *pdev)
 	gf_dev->device_available = 0;
 	gf_dev->fb_black = 0;
 	gf_dev->wait_finger_down = false;
-<<<<<<< HEAD
+
 #ifndef GOODIX_DRM_INTERFACE_WA
 	INIT_WORK(&gf_dev->work, notification_work);
 #endif
-=======
-	INIT_WORK(&gf_dev->work, notification_work);
->>>>>>> 22d9af5cc8bba... disp: msm: Implement early fingerprint wake up optimization
 
 	if (gf_parse_dts(gf_dev)) {
 		goto error_hw;
