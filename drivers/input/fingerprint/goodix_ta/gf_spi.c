@@ -742,10 +742,7 @@ static const struct file_operations gf_fops = {
 };
 
 
-<<<<<<< HEAD
 #ifndef GOODIX_DRM_INTERFACE_WA
-=======
->>>>>>> 22d9af5cc8bba... disp: msm: Implement early fingerprint wake up optimization
 static int goodix_fb_state_chg_callback(struct notifier_block *nb,
 					unsigned long val, void *data)
 {
