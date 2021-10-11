@@ -23,7 +23,6 @@
 #include <linux/errno.h>
 #include <linux/clk.h>
 #include <linux/clk-provider.h>
-#include <linux/energy_model.h>
 #include <linux/cpu.h>
 #include <linux/platform_device.h>
 #include <linux/of_platform.h>
@@ -663,13 +662,12 @@ static bool osm_dt_find_freq(u32 *of_table, int of_len, long frequency)
 static int osm_cpufreq_cpu_init(struct cpufreq_policy *policy)
 {
 	struct cpufreq_frequency_table *table;
-	struct em_data_callback em_cb = EM_DATA_CB(of_dev_pm_opp_get_cpu_power);
 	struct clk_osm *c, *parent;
 	struct clk_hw *p_hw;
-
-	int ret, of_len, nr_opp;
-	unsigned int i, prev_cc = 0;
-	unsigned int xo_kHz;
+	int ret, of_len;
+	unsigned int i, cpu;
+	u32 *of_table = NULL;
+	char tbl_name[] = "qcom,cpufreq-table-##";
 
 	c = osm_configure_policy(policy);
 	if (!c) {
@@ -752,7 +750,6 @@ static int osm_cpufreq_cpu_init(struct cpufreq_policy *policy)
 		pr_err("%s: invalid frequency table: %d\n", __func__, ret);
 		goto err;
 	}
-	nr_opp = ret;
 
 	policy->dvfs_possible_from_any_cpu = true;
 	policy->fast_switch_possible = true;
@@ -764,11 +761,7 @@ static int osm_cpufreq_cpu_init(struct cpufreq_policy *policy)
 
 	cpumask_copy(policy->cpus, &c->related_cpus);
 
-<<<<<<< HEAD
 	kfree(of_table);
-=======
-	em_register_perf_domain(policy->cpus, nr_opp, &em_cb);
->>>>>>> 63009dc1bca96... clk-cpu-osm: Register Energy Model
 	return 0;
 
 err:
