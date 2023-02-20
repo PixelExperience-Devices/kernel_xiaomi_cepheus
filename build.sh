@@ -29,7 +29,7 @@ make mrproper && git reset --hard HEAD
 
 echo "=========================Build========================="
 make O=out cepheus_defconfig
-make O=out | tee out/kernel.log
+make O=out -j12 | tee out/kernel.log
 
 if [ ! -e $KERNEL_PATH/out/arch/arm64/boot/Image.gz-dtb ]; then
     echo "=======================FAILED!!!======================="
