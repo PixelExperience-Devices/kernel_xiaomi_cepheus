@@ -6,6 +6,8 @@ else
 	KERNEL_BUILD := 0
 endif
 
+TARGET_BUILD_VARIANT := user
+
 ifeq ($(KERNEL_BUILD), 1)
 	# These are configurable via Kconfig for kernel-based builds
 	# Need to explicitly configure for Android-based builds
@@ -187,10 +189,12 @@ CDEFINES +=	-DANI_LITTLE_BYTE_ENDIAN \
 		-DANI_OS_TYPE_ANDROID=6 \
 		-DPTT_SOCK_SVC_ENABLE \
 		-Wall\
-		-Werror\
 		-D__linux__
 
-CDEFINES += -DCONFIG_SND_SOC_CS35L41_FOR_CEPH
+ifdef CONFIG_SND_SOC_CS35L41_FOR_CEPH
+	CDEFINES += -DCONFIG_SND_SOC_CS35L41_FOR_CEPH
+endif
+
 KBUILD_CPPFLAGS += $(CDEFINES)
 
 # Currently, for versions of gcc which support it, the kernel Makefile
@@ -246,3 +250,5 @@ machine_dlkm-y := $(MACHINE_OBJS)
 
 obj-$(CONFIG_SND_SOC_CPE) += cpe_lsm_dlkm.o
 cpe_lsm_dlkm-y := $(CPE_LSM_OBJS)
+
+# inject some build related information

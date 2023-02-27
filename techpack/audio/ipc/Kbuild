@@ -6,6 +6,8 @@ else
 	KERNEL_BUILD := 0
 endif
 
+TARGET_BUILD_VARIANT := user
+
 # These are configurable via Kconfig for kernel-based builds
 # Need to explicitly configure for Android-based builds
 KDIR := $(TOP)/kernel/msm-4.14
@@ -162,3 +164,5 @@ apr_dlkm-y := $(APRV_GLINK)
 
 obj-$(CONFIG_WCD_DSP_GLINK) += wglink_dlkm.o
 wglink_dlkm-y := $(WDSP_GLINK)
+
+# inject some build related information

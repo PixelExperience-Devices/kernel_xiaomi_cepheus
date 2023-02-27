@@ -779,7 +779,7 @@ static int msm_lsm_check_and_set_lab_controls(struct snd_pcm_substream *substrea
 	struct lsm_priv *prtd = runtime->private_data;
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 	struct lsm_hw_params *out_hw_params = &prtd->lsm_client->out_hw_params;
-	u8 chmap[out_hw_params->num_chs];
+	u8 chmap[16];
 	u32 ch_idx;
 	int rc = 0, stage_idx = p_info->stage_idx;
 
@@ -2454,7 +2454,7 @@ static int msm_lsm_open(struct snd_pcm_substream *substream)
 	ret = snd_pcm_hw_constraint_integer(runtime,
 			    SNDRV_PCM_HW_PARAM_PERIODS);
 	if (ret < 0)
-		pr_debug("%s: snd_pcm_hw_constraint_integer failed ret %d\n",
+		pr_info("%s: snd_pcm_hw_constraint_integer failed ret %d\n",
 			__func__, ret);
 
 	ret = snd_pcm_hw_constraint_minmax(runtime,
@@ -2535,7 +2535,7 @@ static int msm_lsm_send_ch_mix_config(struct snd_pcm_substream *substream)
 		return 0;
 	}
 
-	ch_wght_coeff = kzalloc(in_params->num_chs * pp_ch_cnt * sizeof(int),
+	ch_wght_coeff = kcalloc(in_params->num_chs * pp_ch_cnt, sizeof(int),
 				GFP_KERNEL);
 	if (!ch_wght_coeff)
 		return -ENOMEM;

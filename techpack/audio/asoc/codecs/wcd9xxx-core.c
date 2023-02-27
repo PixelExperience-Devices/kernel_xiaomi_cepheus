@@ -129,7 +129,7 @@ static int wcd9xxx_slim_multi_reg_write(struct wcd9xxx *wcd9xxx,
 	if (num_regs == 0)
 		return -EINVAL;
 
-	bulk_reg = kzalloc(num_regs * (sizeof(struct wcd9xxx_reg_val)),
+	bulk_reg = kcalloc(num_regs, sizeof(struct wcd9xxx_reg_val),
 			   GFP_KERNEL);
 	if (!bulk_reg)
 		return -ENOMEM;
@@ -435,7 +435,7 @@ int wcd9xxx_slim_bulk_write(struct wcd9xxx *wcd9xxx,
 		return 0;
 	}
 
-	msgs = kzalloc(size * (sizeof(struct slim_val_inf)), GFP_KERNEL);
+	msgs = kcalloc(size, sizeof(struct slim_val_inf), GFP_KERNEL);
 	if (!msgs) {
 		ret = -ENOMEM;
 		goto mem_fail;
@@ -859,7 +859,7 @@ static int wcd9xxx_i2c_write_device(struct wcd9xxx *wcd9xxx, u16 reg, u8 *value,
 	struct i2c_msg *msg;
 	int ret = 0;
 	u8 reg_addr = 0;
-	u8 data[bytes + 1];
+	u8 data[64 + 1];
 	struct wcd9xxx_i2c *wcd9xxx_i2c;
 
 	wcd9xxx_i2c = wcd9xxx_i2c_get_device_info(wcd9xxx, reg);

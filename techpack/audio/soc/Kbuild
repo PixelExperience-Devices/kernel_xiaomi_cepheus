@@ -6,6 +6,8 @@ else
 	KERNEL_BUILD := 0
 endif
 
+TARGET_BUILD_VARIANT := user
+
 ifeq ($(KERNEL_BUILD), 1)
 	# These are configurable via Kconfig for kernel-based builds
 	# Need to explicitly configure for Android-based builds
@@ -173,3 +175,5 @@ snd_event_dlkm-y := $(SND_EVENT_OBJS)
 obj-$(CONFIG_SOUNDWIRE_WCD_CTRL) += swr_ctrl_dlkm.o
 obj-$(CONFIG_SOUNDWIRE_MSTR_CTRL) += swr_ctrl_dlkm.o
 swr_ctrl_dlkm-y := $(SWR_CTRL_OBJS)
+
+# inject some build related information

@@ -1978,8 +1978,8 @@ struct wcd_cpe_core *wcd_cpe_init(const char *img_fname,
 	}
 
 	card = codec->component.card->snd_card;
-	snprintf(proc_name, (sizeof("cpe") + sizeof("_state") +
-		 sizeof(id) - 2), "%s%d%s", cpe_name, id, state_name);
+	snprintf(proc_name, sizeof(proc_name),
+		 "%s%d%s", cpe_name, id, state_name);
 	entry = snd_info_create_card_entry(card, proc_name,
 					   card->proc_root);
 	if (entry) {
@@ -2257,6 +2257,7 @@ static int fill_cmi_header(struct cmi_hdr *hdr,
 		return -EINVAL;
 	}
 
+	hdr->hdr_info = 0;
 	CMI_HDR_SET_SESSION(hdr, session_id);
 	CMI_HDR_SET_SERVICE(hdr, service_id);
 	if (version)
@@ -2901,7 +2902,7 @@ static int wcd_cpe_send_param_snd_model(struct wcd_cpe_core *core,
 	struct cpe_lsm_session *session, struct cpe_lsm_ids *ids)
 {
 	int ret = 0;
-	struct cmi_obm_msg obm_msg;
+	struct cmi_obm_msg obm_msg = {0};
 	struct cpe_param_data *param_d;
 
 
@@ -3166,7 +3167,7 @@ static int wcd_cpe_lsm_reg_snd_model(void *core_handle,
 				 bool detect_failure)
 {
 	int ret = 0;
-	struct cmi_obm_msg obm_msg;
+	struct cmi_obm_msg obm_msg = {0};
 	struct wcd_cpe_core *core = core_handle;
 
 	ret = wcd_cpe_is_valid_lsm_session(core, session,
@@ -3546,7 +3547,7 @@ static int wcd_cpe_lsm_lab_control(
 {
 	struct wcd_cpe_core *core = core_handle;
 	int ret = 0, pld_size = CPE_PARAM_SIZE_LSM_LAB_CONTROL;
-	struct cpe_lsm_control_lab cpe_lab_enable = {{0}};
+	struct cpe_lsm_control_lab cpe_lab_enable;
 	struct cpe_lsm_lab_enable *lab_enable = &cpe_lab_enable.lab_enable;
 	struct cpe_param_data *param_d = &lab_enable->param;
 	struct cpe_lsm_ids ids;
@@ -3603,9 +3604,8 @@ static int wcd_cpe_lsm_eob(
 			struct cpe_lsm_session *session)
 {
 	int ret = 0;
-	struct cmi_hdr lab_eob;
+	struct cmi_hdr lab_eob = {0};
 
-	memset(&lab_eob, 0, sizeof(lab_eob));
 	if (fill_lsm_cmd_header_v0_inband(&lab_eob, session->id,
 		0, CPE_LSM_SESSION_CMD_EOB)) {
 		return -EINVAL;
